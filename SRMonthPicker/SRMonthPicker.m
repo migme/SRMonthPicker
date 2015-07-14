@@ -233,7 +233,7 @@ static const NSCalendarUnit SRDateComponentFlags = NSCalendarUnitMonth | NSCalen
         [self selectRow:(components.month - 1 + monthMidpoint) inComponent:self.monthComponent animated:NO];
     } else
         [self selectRow:(components.month - 1) inComponent:self.monthComponent animated:NO];
-        
+    
     [self selectRow:[self p_rowFromYear:components.year] inComponent:self.yearComponent animated:NO];
     
     _date = [self.calendar dateFromComponents:components];
@@ -286,20 +286,22 @@ static const NSCalendarUnit SRDateComponentFlags = NSCalendarUnitMonth | NSCalen
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     CGFloat width = [self pickerView:self widthForComponent:component];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, 45.0f)];
     CGRect frame = CGRectMake(0.0f, 0.0f, width, 45.0f);
     
     if (component == self.monthComponent)
     {
-        const CGFloat padding = 9.0f;
-        if (component) {
-            frame.origin.x += padding;
-            frame.size.width -= padding;
-        }
-        
+        const CGFloat padding = 35.0f;
+        frame.origin.x += padding;
+        frame.size.width -= padding;
+    } else {
+        const CGFloat padding = 20.0f;
+        frame.origin.x += padding;
         frame.size.width -= padding;
     }
     
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    
     
     NSDateFormatter* formatter = nil;
     
@@ -323,8 +325,9 @@ static const NSCalendarUnit SRDateComponentFlags = NSCalendarUnitMonth | NSCalen
     label.backgroundColor = [UIColor clearColor];
     label.shadowOffset = CGSizeMake(0.0f, 0.1f);
     label.shadowColor = [UIColor whiteColor];
+    [cell addSubview:label];
     
-    return label;
+    return cell;
 }
 
 #pragma mark Private Methods
@@ -357,7 +360,7 @@ static const NSCalendarUnit SRDateComponentFlags = NSCalendarUnitMonth | NSCalen
     self.enableColourRow = YES;
     self.wrapMonths = YES;
     
-    self.font = [UIFont boldSystemFontOfSize:24.0f];
+    self.font = [UIFont boldSystemFontOfSize:20.0f];
     self.fontColor = [UIColor blackColor];
 }
 
